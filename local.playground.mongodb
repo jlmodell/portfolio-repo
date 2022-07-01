@@ -1,0 +1,32 @@
+use("portfolio")
+
+db.users.deleteOne({
+    username: "meagan.modell@gmail.com"
+})
+
+db.users.deleteOne({
+    username: "modell.jeff@me.com"
+})
+
+db.users.insertMany([
+    {
+  "username": "modell.jeff@me.com",
+  "createdAt": new Date(),
+  "active": true,
+  "todos": {},
+},
+    {
+  "username": "meagan.modell@gmail.com",
+  "createdAt": new Date(),
+  "active": true,
+  "todos": {},
+},
+])
+
+db.users.find({})
+
+// db.users.createIndex({
+//     username: 1
+// }, {
+//     unique: true,
+// })

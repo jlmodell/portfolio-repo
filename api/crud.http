@@ -1,0 +1,23 @@
+GET http://localhost/api/v1/users?username=meagan.modell@gmail.com HTTP/1.1
+
+###
+POST http://localhost/api/v1/users/todos/add HTTP/1.1
+Content-Type: application/json
+user: meagan.modell@gmail.com
+
+{
+    "description": "order hannahs birthday invitiastions"
+}
+
+###
+PUT http://localhost/api/v1/users/todos/update/5bc4a096-015f-4ea3-849c-fe79fcf1c801 HTTP/1.1
+Content-Type: application/json
+user: meagan.modell@gmail.com
+
+{
+    "description": "order hannahs birthday invitations"
+}
+
+###
+DELETE http://localhost/api/v1/users/todos/delete/5bc4a096-015f-4ea3-849c-fe79fcf1c801 HTTP/1.1
+user: meagan.modell@gmail.com

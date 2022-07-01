@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017-27019:27017-27019"
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - db:/data/db
+
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - cache:/data
+
+  api:
+    build:
+      context: ./api
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      - MONGODB_HOST=mongo
+      - MONGODB_USER=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGODB_PASS=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGODB_DB=${MONGODB_DB}
+      - USERS=${USERS}
+      - REDIS_HOST=cache
+      - REDIS_PORT=6379
+      - REDIS_PASS=${REDIS_PASSWORD}
+    depends_on:
+      - mongo
+      - cache
+    links:
+      - mongo
+      - cache
+
+volumes:
+  db:
+    driver: local
+  cache:
+    driver: local

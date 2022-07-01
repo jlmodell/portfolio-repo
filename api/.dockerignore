@@ -1,0 +1,7 @@
+crud.http
+example.env
+bin
+include
+**/*.cfg
+**/__pycache__
+.env
